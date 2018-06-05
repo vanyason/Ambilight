@@ -18,13 +18,18 @@ void loop(){
   if(Serial.available() > 4 && Serial.read() == 33){
     r = Serial.parseInt();
     g = Serial.parseInt();
-    b = Serial.parseInt();    
+    b = Serial.parseInt(); 
 
     analogWrite(REDPIN, r);
     analogWrite(GREENPIN, g);
-    analogWrite(BLUEPIN, b); 
+    analogWrite(BLUEPIN, b);   
+
+    /*Serial.println(r);
+    Serial.println(g);
+    Serial.println(b);*/
   }    
 }
+
 
 
 
