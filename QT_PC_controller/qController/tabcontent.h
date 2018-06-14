@@ -16,7 +16,6 @@ protected:
     QSerialPort *serialPort;
     QTextStream *serialOut;
     QColor color;
-
 };
 
 #endif // TABCONTENT_H

@@ -52,19 +52,23 @@ SOURCES       = ../qController/main.cpp \
 		../qController/mainwindow.cpp \
 		../qController/rgbcontroller.cpp \
 		../qController/ambilight.cpp \
-		../qController/tabcontent.cpp moc_mainwindow.cpp \
+		../qController/tabcontent.cpp \
+		../qController/screenregion.cpp moc_mainwindow.cpp \
 		moc_rgbcontroller.cpp \
 		moc_ambilight.cpp \
-		moc_tabcontent.cpp
+		moc_tabcontent.cpp \
+		moc_screenregion.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		rgbcontroller.o \
 		ambilight.o \
 		tabcontent.o \
+		screenregion.o \
 		moc_mainwindow.o \
 		moc_rgbcontroller.o \
 		moc_ambilight.o \
-		moc_tabcontent.o
+		moc_tabcontent.o \
+		moc_screenregion.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -133,11 +137,13 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../qController/qController.pro ../qController/mainwindow.h \
 		../qController/rgbcontroller.h \
 		../qController/ambilight.h \
-		../qController/tabcontent.h ../qController/main.cpp \
+		../qController/tabcontent.h \
+		../qController/screenregion.h ../qController/main.cpp \
 		../qController/mainwindow.cpp \
 		../qController/rgbcontroller.cpp \
 		../qController/ambilight.cpp \
-		../qController/tabcontent.cpp
+		../qController/tabcontent.cpp \
+		../qController/screenregion.cpp
 QMAKE_TARGET  = qController
 DESTDIR       = 
 TARGET        = qController
@@ -304,8 +310,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../qController/mainwindow.h ../qController/rgbcontroller.h ../qController/ambilight.h ../qController/tabcontent.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../qController/main.cpp ../qController/mainwindow.cpp ../qController/rgbcontroller.cpp ../qController/ambilight.cpp ../qController/tabcontent.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../qController/mainwindow.h ../qController/rgbcontroller.h ../qController/ambilight.h ../qController/tabcontent.h ../qController/screenregion.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../qController/main.cpp ../qController/mainwindow.cpp ../qController/rgbcontroller.cpp ../qController/ambilight.cpp ../qController/tabcontent.cpp ../qController/screenregion.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../qController/mainwindow.ui ../qController/rgbcontroller.ui ../qController/ambilight.ui $(DISTDIR)/
 
 
@@ -331,11 +337,11 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_rgbcontroller.cpp moc_ambilight.cpp moc_tabcontent.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_rgbcontroller.cpp moc_ambilight.cpp moc_tabcontent.cpp moc_screenregion.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_rgbcontroller.cpp moc_ambilight.cpp moc_tabcontent.cpp
-moc_mainwindow.cpp: ../qController/rgbcontroller.h \
-		../qController/tabcontent.h \
+	-$(DEL_FILE) moc_mainwindow.cpp moc_rgbcontroller.cpp moc_ambilight.cpp moc_tabcontent.cpp moc_screenregion.cpp
+moc_mainwindow.cpp: ../qController/tabcontent.h \
+		../qController/rgbcontroller.h \
 		../qController/ambilight.h \
 		../qController/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/ivan/Desktop/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/mainwindow.h -o moc_mainwindow.cpp
@@ -344,11 +350,15 @@ moc_rgbcontroller.cpp: ../qController/tabcontent.h \
 		../qController/rgbcontroller.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/ivan/Desktop/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/rgbcontroller.h -o moc_rgbcontroller.cpp
 
-moc_ambilight.cpp: ../qController/ambilight.h
+moc_ambilight.cpp: ../qController/tabcontent.h \
+		../qController/ambilight.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/ivan/Desktop/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/ambilight.h -o moc_ambilight.cpp
 
 moc_tabcontent.cpp: ../qController/tabcontent.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/ivan/Desktop/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/tabcontent.h -o moc_tabcontent.cpp
+
+moc_screenregion.cpp: ../qController/screenregion.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/ivan/Desktop/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/screenregion.h -o moc_screenregion.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -361,7 +371,8 @@ ui_mainwindow.h: ../qController/mainwindow.ui
 ui_rgbcontroller.h: ../qController/rgbcontroller.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../qController/rgbcontroller.ui -o ui_rgbcontroller.h
 
-ui_ambilight.h: ../qController/ambilight.ui
+ui_ambilight.h: ../qController/ambilight.ui \
+		../qController/screenregion.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../qController/ambilight.ui -o ui_ambilight.h
 
 compiler_yacc_decl_make_all:
@@ -375,14 +386,14 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 main.o: ../qController/main.cpp ../qController/mainwindow.h \
-		../qController/rgbcontroller.h \
 		../qController/tabcontent.h \
+		../qController/rgbcontroller.h \
 		../qController/ambilight.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../qController/main.cpp
 
 mainwindow.o: ../qController/mainwindow.cpp ../qController/mainwindow.h \
-		../qController/rgbcontroller.h \
 		../qController/tabcontent.h \
+		../qController/rgbcontroller.h \
 		../qController/ambilight.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../qController/mainwindow.cpp
@@ -393,11 +404,15 @@ rgbcontroller.o: ../qController/rgbcontroller.cpp ../qController/rgbcontroller.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rgbcontroller.o ../qController/rgbcontroller.cpp
 
 ambilight.o: ../qController/ambilight.cpp ../qController/ambilight.h \
+		../qController/tabcontent.h \
 		ui_ambilight.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ambilight.o ../qController/ambilight.cpp
 
 tabcontent.o: ../qController/tabcontent.cpp ../qController/tabcontent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tabcontent.o ../qController/tabcontent.cpp
+
+screenregion.o: ../qController/screenregion.cpp ../qController/screenregion.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o screenregion.o ../qController/screenregion.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -410,6 +425,9 @@ moc_ambilight.o: moc_ambilight.cpp
 
 moc_tabcontent.o: moc_tabcontent.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_tabcontent.o moc_tabcontent.cpp
+
+moc_screenregion.o: moc_screenregion.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_screenregion.o moc_screenregion.cpp
 
 ####### Install
 

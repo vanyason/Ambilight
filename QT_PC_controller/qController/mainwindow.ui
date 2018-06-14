@@ -53,16 +53,27 @@
       <height>291</height>
      </rect>
     </property>
+    <property name="tabPosition">
+     <enum>QTabWidget::North</enum>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Rounded</enum>
+    </property>
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="test">
+    <widget class="RGBController" name="rgbCtrl">
      <attribute name="title">
-      <string>test</string>
+      <string>RGB Controller</string>
+     </attribute>
+    </widget>
+    <widget class="Ambilight" name="ambilight">
+     <attribute name="title">
+      <string>Ambilight</string>
      </attribute>
     </widget>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -106,6 +117,20 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>RGBController</class>
+   <extends>QWidget</extends>
+   <header location="global">rgbcontroller.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ambilight</class>
+   <extends>QWidget</extends>
+   <header location="global">ambilight.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

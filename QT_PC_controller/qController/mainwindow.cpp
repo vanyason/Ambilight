@@ -6,18 +6,35 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //  Add tabs
-    TabContent *rgb = new RGBController();
-    TabContent *ambilight = new Ambilight();
-    rgb->linkPortData(serialPort, serialOut);
-    ambilight->linkPortData(serialPort, serialOut);
-    ui->tabWidget->addTab(rgb, "RGB Controller");
-    ui->tabWidget->addTab(ambilight, "Ambilight");
+    //  Link serial port
+    ui->ambilight->linkPortData(serialPort, serialOut);
+    ui->rgbCtrl->linkPortData(serialPort, serialOut);
 
     //  Get info about available COM ports and set data to comboBox
     QList<QSerialPortInfo> portsList = QSerialPortInfo::availablePorts();
     for (const QSerialPortInfo &info : portsList)
         ui->comboBox->addItem(info.portName());
+
+    //  Setup tray icon
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(this->style()->standardIcon(QStyle::SP_ComputerIcon));
+    trayIcon->setToolTip("LED Controller");
+
+    QAction *viewWindow = new QAction(trUtf8("Show"), this);
+    QAction *quitAction = new QAction(trUtf8("Close"), this);
+
+    QMenu *menu = new QMenu(this);
+    menu->addAction(viewWindow);
+    menu->addAction(quitAction);
+
+    connect(viewWindow, SIGNAL(triggered()), this, SLOT(show()));
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
+
+    trayIcon->setContextMenu(menu);
+    trayIcon->show();
+
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 }
 MainWindow::~MainWindow() {	delete ui;}
 
@@ -36,5 +53,41 @@ void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
         cout << "Port: " << arg1 << " is setted" << endl;
     } catch (...) {
         cout << "Something wrong with COM port" << endl;
+    }
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    if (ui->ambilight->ambilightStarted)
+        ui->ambilight->clickButton();
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (this->isVisible()) {
+        event->ignore();
+        this->hide();
+//        QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
+//        trayIcon->showMessage("Tray Program",
+//                              trUtf8("Приложение свернуто в трей. Для того чтобы, "
+//                                     "развернуть окно приложения, щелкните по иконке приложения в трее"),
+//                              icon,
+//                              2000);
+    }
+}
+
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason) {
+    case QSystemTrayIcon::Trigger:
+        if (!this->isVisible()) {
+            this->show();
+        } else {
+            this->hide();
+        }
+
+        break;
+    default:
+        break;
     }
 }

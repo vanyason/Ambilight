@@ -17,12 +17,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     rgbcontroller.cpp \
     ambilight.cpp \
-    tabcontent.cpp
+    tabcontent.cpp \
+    screenregion.cpp
 
 HEADERS  += mainwindow.h \
     rgbcontroller.h \
     ambilight.h \
-    tabcontent.h
+    tabcontent.h \
+    screenregion.h
 
 FORMS    += mainwindow.ui \
     rgbcontroller.ui \

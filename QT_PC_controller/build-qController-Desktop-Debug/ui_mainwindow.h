@@ -23,6 +23,8 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
+#include <ambilight.h>
+#include <rgbcontroller.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -31,8 +33,9 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QTabWidget *tabWidget;
-    QWidget *test;
-    QWidget *widget;
+    RGBController *rgbCtrl;
+    Ambilight *ambilight;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QComboBox *comboBox;
@@ -56,23 +59,28 @@ public:
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setGeometry(QRect(10, 70, 531, 291));
-        test = new QWidget();
-        test->setObjectName(QStringLiteral("test"));
-        tabWidget->addTab(test, QString());
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(20, 30, 251, 27));
-        horizontalLayout = new QHBoxLayout(widget);
+        tabWidget->setTabPosition(QTabWidget::North);
+        tabWidget->setTabShape(QTabWidget::Rounded);
+        rgbCtrl = new RGBController();
+        rgbCtrl->setObjectName(QStringLiteral("rgbCtrl"));
+        tabWidget->addTab(rgbCtrl, QString());
+        ambilight = new Ambilight();
+        ambilight->setObjectName(QStringLiteral("ambilight"));
+        tabWidget->addTab(ambilight, QString());
+        layoutWidget = new QWidget(centralWidget);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(20, 30, 251, 27));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(widget);
+        label = new QLabel(layoutWidget);
         label->setObjectName(QStringLiteral("label"));
 
         horizontalLayout->addWidget(label);
 
-        comboBox = new QComboBox(widget);
+        comboBox = new QComboBox(layoutWidget);
         comboBox->setObjectName(QStringLiteral("comboBox"));
 
         horizontalLayout->addWidget(comboBox);
@@ -100,7 +108,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "LED Tape Control", 0));
-        tabWidget->setTabText(tabWidget->indexOf(test), QApplication::translate("MainWindow", "test", 0));
+        tabWidget->setTabText(tabWidget->indexOf(rgbCtrl), QApplication::translate("MainWindow", "RGB Controller", 0));
+        tabWidget->setTabText(tabWidget->indexOf(ambilight), QApplication::translate("MainWindow", "Ambilight", 0));
         label->setText(QApplication::translate("MainWindow", "Choose serial port", 0));
     } // retranslateUi
 
