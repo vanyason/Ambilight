@@ -30,9 +30,11 @@ private slots:
 private:
     Ui::Ambilight *ui;
     QTimer *timer;
-    QImage screenshot;
 
-
+    QImage screenshot, newScreenshot;
+    int r0, g0, b0;
+    int r1, g1, b1;
+    QColor color1;
 };
 
 #endif // AMBILIGHT_H

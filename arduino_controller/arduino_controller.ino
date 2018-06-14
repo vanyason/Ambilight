@@ -7,7 +7,7 @@ int g = 0;
 int b = 0;
 
 void setup() {
-  Serial.setTimeout(100);
+  Serial.setTimeout(0);
   Serial.begin(9600);
   pinMode(REDPIN, OUTPUT);
   pinMode(GREENPIN, OUTPUT);

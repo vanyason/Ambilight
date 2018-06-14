@@ -4,8 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT       += serialport
+QT += core gui
+QT += serialport
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,3 +30,5 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     rgbcontroller.ui \
     ambilight.ui
+
+QT += widgets

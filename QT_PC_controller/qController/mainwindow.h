@@ -9,6 +9,7 @@
 #include <QCloseEvent>
 #include <QSystemTrayIcon>
 #include <QAction>
+#include <QWidget>
 
 #include "tabcontent.h"
 #include "rgbcontroller.h"
