@@ -43,7 +43,7 @@ public:
         screenRegion->setAutoFillBackground(false);
         colorPallete = new QWidget(Ambilight);
         colorPallete->setObjectName(QStringLiteral("colorPallete"));
-        colorPallete->setGeometry(QRect(10, 70, 81, 181));
+        colorPallete->setGeometry(QRect(10, 60, 81, 191));
         colorPallete->setAutoFillBackground(true);
 
         retranslateUi(Ambilight);

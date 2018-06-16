@@ -16,6 +16,9 @@ protected:
     QSerialPort *serialPort;
     QTextStream *serialOut;
     QColor color;
+
+    void sendDataToArduino();
+    void fillWidgetPallete(QWidget *widget);
 };
 
 #endif // TABCONTENT_H

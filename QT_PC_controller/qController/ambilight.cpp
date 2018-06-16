@@ -13,45 +13,50 @@ Ambilight::Ambilight(QWidget *parent) :
 
 Ambilight::~Ambilight() {delete ui;}
 
-void Ambilight::timerUpdate()
+QColor Ambilight::getAveragePixelColor(const QImage &img, int step)
 {
-    QRect selectedRegion = ui->screenRegion->getSelectedRegion();
-
-    if (selectedRegion.isEmpty())
-        return;
-
-    QImage screenshot = QGuiApplication::primaryScreen()->grabWindow(0, selectedRegion.x(), selectedRegion.y(),
-                        selectedRegion.width(), selectedRegion.height()).toImage();
-
-    //  get average pixel
     int r = 0, g = 0, b = 0;
-    for (int i = 0; i < screenshot.width(); i += 2)
-        for (int j = 0 ; j < screenshot.height(); j += 2) {
-            r += screenshot.pixelColor(i, j).red();
-            g += screenshot.pixelColor(i, j).green();
-            b += screenshot.pixelColor(i, j).blue();
+    for (int i = 0; i < img.width(); i += step)
+        for (int j = 0 ; j < img.height(); j += step) {
+            r += img.pixelColor(i, j).red();
+            g += img.pixelColor(i, j).green();
+            b += img.pixelColor(i, j).blue();
         }
-    r /= screenshot.width() * screenshot.height() / 4;
-    g /= screenshot.width() * screenshot.height() / 4;
-    b /= screenshot.width() * screenshot.height() / 4;
+    r /= img.width() * img.height() / (step * step);
+    g /= img.width() * img.height() / (step * step);
+    b /= img.width() * img.height() / (step * step);
 
-    //qDebug() << r << " " << g << " " << b;
-
+    QColor color;
     color.setRed((r > 255 ? r = 255 : r));
     color.setGreen((g > 255 ? g = 255 : g));
     color.setBlue((b > 255 ? b = 255 : b));
 
-    //  Show color in the colorWidget
-    QPalette pal(palette());
-    pal.setColor(QPalette::Background, color);
-    ui->colorPallete->setPalette(pal);
+    return color;
+}
 
-    //  Send data to Arduino com port
-    *serialOut << "!" << " " <<  QVariant(color.red()).toString() << " " << QVariant(color.green()).toString() << " " << QVariant(color.blue()).toString() << endl;
+void Ambilight::timerUpdate()
+{
+    QRect selectedRegion = ui->screenRegion->getSelectedRegion();
+    if (selectedRegion.isEmpty())
+        return;
+
+    QImage screenshot = QGuiApplication::primaryScreen()->grabWindow(0,
+                        selectedRegion.x(), selectedRegion.y(),
+                        selectedRegion.width(), selectedRegion.height()).toImage();
+
+    //  Trying to optimize speed in the loop
+    if (screenshot.width() >= 800 && screenshot.height() >= 500)
+        color = getAveragePixelColor(screenshot, 20);
+    else if (screenshot.width() <= 400 && screenshot.height() <= 400)
+        color = getAveragePixelColor(screenshot, 4);
+    else
+        color = getAveragePixelColor(screenshot, 6);
+
+    fillWidgetPallete(ui->colorPallete);
+    sendDataToArduino();
 
     // if you turn this on, you will get dynamically changing picture, but it costs CPU !!!
     // repaint();
-
 }
 
 void Ambilight::on_pushButton_clicked()
@@ -60,9 +65,8 @@ void Ambilight::on_pushButton_clicked()
         ambilightStarted = true;
         ui->pushButton->setText("Finish");
 
-        //  Start timer
-        timer->start(100);
-
+        //  Start timer . Is this aproximatelly 60+ fps ?
+        timer->start(15);
     } else {
         ambilightStarted = false;
         ui->pushButton->setText("Start");
@@ -72,7 +76,7 @@ void Ambilight::on_pushButton_clicked()
     }
 }
 
-void Ambilight::clickButton()
+void Ambilight::clickStartButton()
 {
     ui->pushButton->click();
 }

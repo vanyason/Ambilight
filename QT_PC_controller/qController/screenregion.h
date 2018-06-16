@@ -8,7 +8,6 @@
 #include <QGuiApplication>
 #include <QScreen>
 
-
 class ScreenRegion : public QWidget
 {
     Q_OBJECT
@@ -16,7 +15,6 @@ class ScreenRegion : public QWidget
 public:
     explicit ScreenRegion(QWidget *parent = 0);
     const QRect getSelectedRegion();
-    const QColor &getAverageColor();
 
 private:
     QRect selectionRect;

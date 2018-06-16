@@ -21,7 +21,7 @@ public:
     explicit Ambilight(QWidget *parent = 0);
     ~Ambilight();
     bool ambilightStarted;
-    void clickButton();
+    void clickStartButton();
 
 private slots:
     void on_pushButton_clicked();
@@ -32,7 +32,13 @@ private:
     QTimer *timer;
     QImage screenshot;
 
-
+    /**
+     * @brief getAveragePixelColor
+     * @param img Source image to analyse
+     * @param step How many pixels to skip during an iteration in the loop
+     * @return Average pixel color
+     */
+    QColor getAveragePixelColor(const QImage &img, int step = 4);
 };
 
 #endif // AMBILIGHT_H
