@@ -4,10 +4,9 @@ TabContent::TabContent(QWidget *parent) : QWidget(parent)
 {}
 TabContent::~TabContent() {}
 
-void TabContent::linkPortData(QSerialPort &serialPort, QTextStream &serialOut)
+void TabContent::linkPort(QSerialPort &serialPort)
 {
-    this->serialPort = &serialPort;
-    this->serialOut = &serialOut;
+    this->serialPort = &serialPort;   
 }
 
 void TabContent::sendDataToArduino()

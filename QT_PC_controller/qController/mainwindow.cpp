@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -7,8 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //  Link serial port
-    ui->ambilight->linkPortData(serialPort, serialOut);
-    ui->rgbCtrl->linkPortData(serialPort, serialOut);
+    ui->ambilight->linkPort(serialPort);
+    ui->rgbCtrl->linkPort(serialPort);
+    ui->lightMusic->linkPort(serialPort);
 
     //  Get info about available COM ports and set data to comboBox
     QList<QSerialPortInfo> portsList = QSerialPortInfo::availablePorts();
@@ -43,13 +45,13 @@ MainWindow::~MainWindow() {	delete ui;}
  */
 void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
 {
+    qDebug() << "did this work?";
     QTextStream cout(stdout);
     try {
         serialPort.close();
         serialPort.setPortName(arg1);
-        serialPort.setBaudRate(9600);
+        serialPort.setBaudRate(115200);
         serialPort.open(QIODevice::WriteOnly);
-        serialOut.setDevice(&serialPort);
         cout << "Port: " << arg1 << " is setted" << endl;
     } catch (...) {
         cout << "Something wrong with COM port" << endl;

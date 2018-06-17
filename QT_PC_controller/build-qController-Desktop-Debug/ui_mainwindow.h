@@ -24,6 +24,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 #include <ambilight.h>
+#include <lightmusic.h>
 #include <rgbcontroller.h>
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +36,7 @@ public:
     QTabWidget *tabWidget;
     RGBController *rgbCtrl;
     Ambilight *ambilight;
+    LightMusic *lightMusic;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
@@ -67,6 +69,9 @@ public:
         ambilight = new Ambilight();
         ambilight->setObjectName(QStringLiteral("ambilight"));
         tabWidget->addTab(ambilight, QString());
+        lightMusic = new LightMusic();
+        lightMusic->setObjectName(QStringLiteral("lightMusic"));
+        tabWidget->addTab(lightMusic, QString());
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(20, 30, 251, 27));
@@ -99,7 +104,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -110,6 +115,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "LED Tape Control", 0));
         tabWidget->setTabText(tabWidget->indexOf(rgbCtrl), QApplication::translate("MainWindow", "RGB Controller", 0));
         tabWidget->setTabText(tabWidget->indexOf(ambilight), QApplication::translate("MainWindow", "Ambilight", 0));
+        tabWidget->setTabText(tabWidget->indexOf(lightMusic), QApplication::translate("MainWindow", "LightMusic", 0));
         label->setText(QApplication::translate("MainWindow", "Choose serial port", 0));
     } // retranslateUi
 

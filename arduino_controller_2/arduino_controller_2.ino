@@ -9,7 +9,7 @@ int rgb[4];
 
 void setup() {
   //Serial.setTimeout(100);
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(REDPIN, OUTPUT);
   pinMode(GREENPIN, OUTPUT);
   pinMode(BLUEPIN, OUTPUT);

@@ -5,10 +5,10 @@
 #include <QSerialPortInfo>
 #include <QException>
 #include <QSerialPort>
-#include <QTextStream>
 #include <QCloseEvent>
 #include <QSystemTrayIcon>
 #include <QAction>
+#include <QTextStream>
 
 #include "tabcontent.h"
 #include "rgbcontroller.h"
@@ -37,7 +37,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QSerialPort serialPort;
-    QTextStream serialOut;
+
     QSystemTrayIcon *trayIcon;
 };
 

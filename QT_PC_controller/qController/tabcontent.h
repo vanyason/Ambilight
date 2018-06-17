@@ -2,8 +2,8 @@
 #define TABCONTENT_H
 
 #include <QWidget>
-#include <QTextStream>
 #include <QSerialPort>
+#include <QTextStream>
 
 class TabContent : public QWidget
 {
@@ -11,10 +11,9 @@ class TabContent : public QWidget
 public:
     explicit TabContent(QWidget *parent = 0);
     virtual ~TabContent();
-    void linkPortData(QSerialPort &serialPort, QTextStream &serialOut);
+    void linkPort(QSerialPort &serialPort);
 protected:
-    QSerialPort *serialPort;
-    QTextStream *serialOut;
+    QSerialPort *serialPort;   
     QColor color;
 
     void sendDataToArduino();

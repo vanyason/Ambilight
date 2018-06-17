@@ -60,7 +60,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="RGBController" name="rgbCtrl">
      <attribute name="title">
@@ -70,6 +70,11 @@
     <widget class="Ambilight" name="ambilight">
      <attribute name="title">
       <string>Ambilight</string>
+     </attribute>
+    </widget>
+    <widget class="LightMusic" name="lightMusic">
+     <attribute name="title">
+      <string>LightMusic</string>
      </attribute>
     </widget>
    </widget>
@@ -128,6 +133,12 @@
    <class>Ambilight</class>
    <extends>QWidget</extends>
    <header location="global">ambilight.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LightMusic</class>
+   <extends>QWidget</extends>
+   <header location="global">lightmusic.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

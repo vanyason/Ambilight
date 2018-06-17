@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_MULTIMEDIA_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_SERIALPORT_LIB -DQT_CORE_LIB
 CFLAGS        = -m64 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -m64 -pipe -g -std=gnu++0x -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../qController -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtSerialPort -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
+INCPATH       = -I../qController -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtMultimedia -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt5/QtSerialPort -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
 QMAKE         = /usr/lib/x86_64-linux-gnu/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = qController1.0.0
 DISTDIR = /mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/build-qController-Desktop-Debug/.tmp/qController1.0.0
 LINK          = g++
 LFLAGS        = -m64
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Widgets -lQt5Gui -lQt5SerialPort -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Multimedia -lQt5Widgets -lQt5Gui -lQt5Network -lQt5SerialPort -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,22 +53,30 @@ SOURCES       = ../qController/main.cpp \
 		../qController/rgbcontroller.cpp \
 		../qController/ambilight.cpp \
 		../qController/tabcontent.cpp \
-		../qController/screenregion.cpp moc_mainwindow.cpp \
+		../qController/screenregion.cpp \
+		../qController/renderarea.cpp \
+		../qController/lightmusic.cpp moc_mainwindow.cpp \
 		moc_rgbcontroller.cpp \
 		moc_ambilight.cpp \
 		moc_tabcontent.cpp \
-		moc_screenregion.cpp
+		moc_screenregion.cpp \
+		moc_renderarea.cpp \
+		moc_lightmusic.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		rgbcontroller.o \
 		ambilight.o \
 		tabcontent.o \
 		screenregion.o \
+		renderarea.o \
+		lightmusic.o \
 		moc_mainwindow.o \
 		moc_rgbcontroller.o \
 		moc_ambilight.o \
 		moc_tabcontent.o \
-		moc_screenregion.o
+		moc_screenregion.o \
+		moc_renderarea.o \
+		moc_lightmusic.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -88,6 +96,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
@@ -138,12 +148,16 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../qController/rgbcontroller.h \
 		../qController/ambilight.h \
 		../qController/tabcontent.h \
-		../qController/screenregion.h ../qController/main.cpp \
+		../qController/screenregion.h \
+		../qController/renderarea.h \
+		../qController/lightmusic.h ../qController/main.cpp \
 		../qController/mainwindow.cpp \
 		../qController/rgbcontroller.cpp \
 		../qController/ambilight.cpp \
 		../qController/tabcontent.cpp \
-		../qController/screenregion.cpp
+		../qController/screenregion.cpp \
+		../qController/renderarea.cpp \
+		../qController/lightmusic.cpp
 QMAKE_TARGET  = qController
 DESTDIR       = 
 TARGET        = qController
@@ -152,7 +166,7 @@ TARGET        = qController
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_rgbcontroller.h ui_ambilight.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_rgbcontroller.h ui_ambilight.h ui_lightmusic.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../qController/qController.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -174,6 +188,8 @@ Makefile: ../qController/qController.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/l
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
@@ -221,8 +237,10 @@ Makefile: ../qController/qController.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/l
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../qController/qController.pro \
+		/usr/lib/x86_64-linux-gnu/libQt5Multimedia.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Gui.prl \
+		/usr/lib/x86_64-linux-gnu/libQt5Network.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5SerialPort.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Core.prl
 	$(QMAKE) -spec linux-g++-64 CONFIG+=debug CONFIG+=qml_debug -o Makefile ../qController/qController.pro
@@ -245,6 +263,8 @@ Makefile: ../qController/qController.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/l
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri:
@@ -292,8 +312,10 @@ Makefile: ../qController/qController.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/l
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf:
 ../qController/qController.pro:
+/usr/lib/x86_64-linux-gnu/libQt5Multimedia.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Widgets.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Gui.prl:
+/usr/lib/x86_64-linux-gnu/libQt5Network.prl:
 /usr/lib/x86_64-linux-gnu/libQt5SerialPort.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Core.prl:
 qmake: FORCE
@@ -310,9 +332,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../qController/mainwindow.h ../qController/rgbcontroller.h ../qController/ambilight.h ../qController/tabcontent.h ../qController/screenregion.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../qController/main.cpp ../qController/mainwindow.cpp ../qController/rgbcontroller.cpp ../qController/ambilight.cpp ../qController/tabcontent.cpp ../qController/screenregion.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../qController/mainwindow.ui ../qController/rgbcontroller.ui ../qController/ambilight.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../qController/mainwindow.h ../qController/rgbcontroller.h ../qController/ambilight.h ../qController/tabcontent.h ../qController/screenregion.h ../qController/renderarea.h ../qController/lightmusic.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../qController/main.cpp ../qController/mainwindow.cpp ../qController/rgbcontroller.cpp ../qController/ambilight.cpp ../qController/tabcontent.cpp ../qController/screenregion.cpp ../qController/renderarea.cpp ../qController/lightmusic.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../qController/mainwindow.ui ../qController/rgbcontroller.ui ../qController/ambilight.ui ../qController/lightmusic.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -337,37 +359,46 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_rgbcontroller.cpp moc_ambilight.cpp moc_tabcontent.cpp moc_screenregion.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_rgbcontroller.cpp moc_ambilight.cpp moc_tabcontent.cpp moc_screenregion.cpp moc_renderarea.cpp moc_lightmusic.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_rgbcontroller.cpp moc_ambilight.cpp moc_tabcontent.cpp moc_screenregion.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_rgbcontroller.cpp moc_ambilight.cpp moc_tabcontent.cpp moc_screenregion.cpp moc_renderarea.cpp moc_lightmusic.cpp
 moc_mainwindow.cpp: ../qController/tabcontent.h \
 		../qController/rgbcontroller.h \
 		../qController/ambilight.h \
 		../qController/mainwindow.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/mainwindow.h -o moc_mainwindow.cpp
 
 moc_rgbcontroller.cpp: ../qController/tabcontent.h \
 		../qController/rgbcontroller.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/rgbcontroller.h -o moc_rgbcontroller.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/rgbcontroller.h -o moc_rgbcontroller.cpp
 
 moc_ambilight.cpp: ../qController/tabcontent.h \
 		../qController/ambilight.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/ambilight.h -o moc_ambilight.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/ambilight.h -o moc_ambilight.cpp
 
 moc_tabcontent.cpp: ../qController/tabcontent.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/tabcontent.h -o moc_tabcontent.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/tabcontent.h -o moc_tabcontent.cpp
 
 moc_screenregion.cpp: ../qController/screenregion.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/screenregion.h -o moc_screenregion.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/screenregion.h -o moc_screenregion.cpp
+
+moc_renderarea.cpp: ../qController/renderarea.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/renderarea.h -o moc_renderarea.cpp
+
+moc_lightmusic.cpp: ../qController/tabcontent.h \
+		../qController/lightmusic.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/mnt/D/MEGA/PROGRAMMING/Projects/Ambilight/QT_PC_controller/qController -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qController/lightmusic.h -o moc_lightmusic.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_rgbcontroller.h ui_ambilight.h
+compiler_uic_make_all: ui_mainwindow.h ui_rgbcontroller.h ui_ambilight.h ui_lightmusic.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_rgbcontroller.h ui_ambilight.h
+	-$(DEL_FILE) ui_mainwindow.h ui_rgbcontroller.h ui_ambilight.h ui_lightmusic.h
 ui_mainwindow.h: ../qController/mainwindow.ui \
 		../qController/rgbcontroller.h \
 		../qController/ambilight.h \
+		../qController/lightmusic.h \
+		../qController/tabcontent.h \
 		../qController/tabcontent.h \
 		../qController/tabcontent.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../qController/mainwindow.ui -o ui_mainwindow.h
@@ -378,6 +409,10 @@ ui_rgbcontroller.h: ../qController/rgbcontroller.ui
 ui_ambilight.h: ../qController/ambilight.ui \
 		../qController/screenregion.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../qController/ambilight.ui -o ui_ambilight.h
+
+ui_lightmusic.h: ../qController/lightmusic.ui \
+		../qController/renderarea.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../qController/lightmusic.ui -o ui_lightmusic.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -399,7 +434,8 @@ mainwindow.o: ../qController/mainwindow.cpp ../qController/mainwindow.h \
 		../qController/tabcontent.h \
 		../qController/rgbcontroller.h \
 		../qController/ambilight.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../qController/lightmusic.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../qController/mainwindow.cpp
 
 rgbcontroller.o: ../qController/rgbcontroller.cpp ../qController/rgbcontroller.h \
@@ -419,6 +455,15 @@ tabcontent.o: ../qController/tabcontent.cpp ../qController/tabcontent.h
 screenregion.o: ../qController/screenregion.cpp ../qController/screenregion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o screenregion.o ../qController/screenregion.cpp
 
+renderarea.o: ../qController/renderarea.cpp ../qController/renderarea.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o renderarea.o ../qController/renderarea.cpp
+
+lightmusic.o: ../qController/lightmusic.cpp ../qController/lightmusic.h \
+		../qController/tabcontent.h \
+		ui_lightmusic.h \
+		../qController/renderarea.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lightmusic.o ../qController/lightmusic.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
@@ -433,6 +478,12 @@ moc_tabcontent.o: moc_tabcontent.cpp
 
 moc_screenregion.o: moc_screenregion.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_screenregion.o moc_screenregion.cpp
+
+moc_renderarea.o: moc_renderarea.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_renderarea.o moc_renderarea.cpp
+
+moc_lightmusic.o: moc_lightmusic.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_lightmusic.o moc_lightmusic.cpp
 
 ####### Install
 

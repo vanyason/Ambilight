@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT       += serialport
+QT       += core gui multimedia serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,14 +17,19 @@ SOURCES += main.cpp\
     rgbcontroller.cpp \
     ambilight.cpp \
     tabcontent.cpp \
-    screenregion.cpp
+    screenregion.cpp \
+    renderarea.cpp \
+    lightmusic.cpp
 
 HEADERS  += mainwindow.h \
     rgbcontroller.h \
     ambilight.h \
     tabcontent.h \
-    screenregion.h
+    screenregion.h \
+    renderarea.h \
+    lightmusic.h
 
 FORMS    += mainwindow.ui \
     rgbcontroller.ui \
-    ambilight.ui
+    ambilight.ui \
+    lightmusic.ui
