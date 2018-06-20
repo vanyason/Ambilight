@@ -1,7 +1,4 @@
-#include "lightmusic.h"
-#include "ui_lightmusic.h"
-
-const int BufferSize = 4096;
+#include "audioinfo.h"
 
 AudioInfo::AudioInfo(const QAudioFormat &format, QObject *parent)
     :   QIODevice(parent)
@@ -58,9 +55,15 @@ AudioInfo::AudioInfo(const QAudioFormat &format, QObject *parent)
 
 AudioInfo::~AudioInfo() {}
 
-void AudioInfo::start() {	open(QIODevice::WriteOnly);}
+void AudioInfo::start()
+{
+    open(QIODevice::WriteOnly);
+}
 
-void AudioInfo::stop() {	close();}
+void AudioInfo::stop()
+{
+    close();
+}
 
 qint64 AudioInfo::readData(char *data, qint64 maxlen)
 {
@@ -124,126 +127,4 @@ qint64 AudioInfo::writeData(const char *data, qint64 len)
 
     emit update();
     return len;
-}
-
-
-
-
-
-
-LightMusic::LightMusic(QWidget *parent) :
-    TabContent(parent),
-    ui(new Ui::LightMusic),
-    audioInfo(0),
-    audioInput(0),
-    input(0),
-    buffer(BufferSize, 0),
-    audioDeviceInfo(QAudioDeviceInfo::defaultInputDevice())
-{
-    ui->setupUi(this);
-    initializeWindow();
-    initializeAudio();
-}
-
-LightMusic::~LightMusic()
-{
-    delete ui;
-}
-
-void LightMusic::initializeWindow()
-{
-
-    /*
-     * Помещаем в комбобокс все аудио девайсы
-     */
-    const QAudioDeviceInfo &defaultDeviceInfo = QAudioDeviceInfo::defaultInputDevice();
-    ui->deviceBox->addItem(defaultDeviceInfo.deviceName(), qVariantFromValue(defaultDeviceInfo));
-    foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
-        if (deviceInfo != defaultDeviceInfo)
-            ui->deviceBox->addItem(deviceInfo.deviceName(), qVariantFromValue(deviceInfo));
-    }
-    connect(ui->deviceBox, SIGNAL(activated(int)), SLOT(deviceChanged(int)));
-
-
-
-    connect(ui->volumelSlider, SIGNAL(valueChanged(int)), SLOT(sliderChanged(int)));
-
-
-
-}
-
-void LightMusic::initializeAudio()
-{
-    audioFormat.setSampleRate(8000);
-    audioFormat.setChannelCount(1);
-    audioFormat.setSampleSize(16);
-    audioFormat.setSampleType(QAudioFormat::SignedInt);
-    audioFormat.setByteOrder(QAudioFormat::LittleEndian);
-    audioFormat.setCodec("audio/pcm");
-
-    QAudioDeviceInfo info(audioDeviceInfo);
-    if (!info.isFormatSupported(audioFormat)) {
-        qWarning() << "Default format not supported - trying to use nearest";
-        audioFormat = info.nearestFormat(audioFormat);
-    }
-
-    if (audioInfo)
-        delete audioInfo;
-    audioInfo  = new AudioInfo(audioFormat, this);
-    connect(audioInfo, SIGNAL(update()), SLOT(refreshDisplay()));
-
-    createAudioInput();
-}
-
-void LightMusic::createAudioInput()
-{
-    audioInput = new QAudioInput(audioDeviceInfo, audioFormat, this);
-    ui->volumelSlider->setValue(audioInput->volume() * 100);
-    audioInfo->start();
-    audioInput->start(audioInfo);
-}
-
-void LightMusic::refreshDisplay()
-{
-    ui->renderArea->setLevel(audioInfo->level());
-
-    /*Sending data to arduino!*/
-    color.setRed((int)255*audioInfo->level());
-    qDebug() << audioInfo->level();
-    fillWidgetPallete(ui->colorPallete);
-    sendDataToArduino();
-    update();
-
-
-
-
-}
-
-void LightMusic::readMore()
-{
-    if (!audioInput)
-        return;
-    qint64 len = audioInput->bytesReady();
-    if (len > BufferSize)
-        len = BufferSize;
-    qint64 l = input->read(buffer.data(), len);
-    if (l > 0)
-        audioInfo->write(buffer.constData(), l);
-}
-
-void LightMusic::deviceChanged(int index)
-{
-    audioInfo->stop();
-    audioInput->stop();
-    audioInput->disconnect(this);
-    delete audioInput;
-
-    audioDeviceInfo = ui->deviceBox->itemData(index).value<QAudioDeviceInfo>();
-    initializeAudio();
-}
-
-void LightMusic::sliderChanged(int value)
-{
-    if (audioInput)
-        audioInput->setVolume(qreal(value) / 100);
 }

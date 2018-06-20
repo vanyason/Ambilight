@@ -14,20 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    rgbcontroller.cpp \
-    ambilight.cpp \
-    tabcontent.cpp \
-    screenregion.cpp \
-    renderarea.cpp \
-    lightmusic.cpp
+    mywidgets.cpp \
+    tabcontents.cpp \
+    audioinfo.cpp \
+    lightmusicmode.cpp
 
 HEADERS  += mainwindow.h \
-    rgbcontroller.h \
-    ambilight.h \
-    tabcontent.h \
-    screenregion.h \
-    renderarea.h \
-    lightmusic.h
+    mywidgets.h \
+    tabcontents.h \
+    audioinfo.h \
+    lightmusicmode.h
 
 FORMS    += mainwindow.ui \
     rgbcontroller.ui \

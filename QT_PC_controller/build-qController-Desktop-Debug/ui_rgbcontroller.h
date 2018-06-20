@@ -20,6 +20,7 @@
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <mywidgets.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -28,7 +29,7 @@ class Ui_RGBController
 public:
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
-    QWidget *colorPallete;
+    ColorPallete *colorPallete;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QSlider *redSlider;
@@ -53,7 +54,7 @@ public:
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        colorPallete = new QWidget(layoutWidget);
+        colorPallete = new ColorPallete(layoutWidget);
         colorPallete->setObjectName(QStringLiteral("colorPallete"));
         colorPallete->setAutoFillBackground(true);
 

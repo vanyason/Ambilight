@@ -126,19 +126,19 @@
   <customwidget>
    <class>RGBController</class>
    <extends>QWidget</extends>
-   <header location="global">rgbcontroller.h</header>
+   <header location="global">tabcontents.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>Ambilight</class>
    <extends>QWidget</extends>
-   <header location="global">ambilight.h</header>
+   <header location="global">tabcontents.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>LightMusic</class>
    <extends>QWidget</extends>
-   <header location="global">lightmusic.h</header>
+   <header location="global">tabcontents.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

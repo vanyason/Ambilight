@@ -1,4 +1,42 @@
-#include "screenregion.h"
+#include "mywidgets.h"
+
+SoundLevel::SoundLevel(QWidget *parent)
+    : QWidget(parent)
+{
+    setBackgroundRole(QPalette::Base);
+    setAutoFillBackground(true);
+
+    m_level = 0;
+    setMinimumHeight(30);
+    setMinimumWidth(200);
+}
+
+void SoundLevel::paintEvent(QPaintEvent * /* event */)
+{
+    QPainter painter(this);
+
+    painter.setPen(Qt::black);
+    painter.drawRect(QRect(painter.viewport().left() + 10,
+                           painter.viewport().top() + 10,
+                           painter.viewport().right() - 20,
+                           painter.viewport().bottom() - 20));
+    if (m_level == 0.0)
+        return;
+
+    int pos = ((painter.viewport().right() - 20) - (painter.viewport().left() + 11)) * m_level;
+    painter.fillRect(painter.viewport().left() + 11,
+                     painter.viewport().top() + 10,
+                     pos,
+                     painter.viewport().height() - 21,
+                     Qt::red);
+}
+
+void SoundLevel::setLevel(qreal value)
+{
+    m_level = value;
+    update();
+}
+
 
 ScreenRegion::ScreenRegion(QWidget *parent) : QWidget(parent),
     selectionRect(), selectionStarted(false)
@@ -54,4 +92,18 @@ void ScreenRegion::mousePressEvent(QMouseEvent *event)
 void ScreenRegion::mouseReleaseEvent(QMouseEvent *event)
 {
     selectionStarted = false;
+}
+
+//  ------  Color Pallete   ------------------
+//
+ColorPallete::ColorPallete(QWidget *parent) : QWidget(parent)
+{
+    setAutoFillBackground(true);
+}
+
+void ColorPallete::setColor(const QColor &color)
+{
+    QPalette pal(palette());
+    pal.setColor(QPalette::Background, color);
+    this->setPalette(pal);
 }

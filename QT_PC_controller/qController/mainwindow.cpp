@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -45,7 +44,6 @@ MainWindow::~MainWindow() {	delete ui;}
  */
 void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
 {
-    qDebug() << "did this work?";
     QTextStream cout(stdout);
     try {
         serialPort.close();
@@ -62,6 +60,8 @@ void MainWindow::on_tabWidget_currentChanged(int index)
 {
     if (ui->ambilight->ambilightStarted)
         ui->ambilight->clickStartButton();
+    if(ui->lightMusic->lightMusicStarted)
+        ui->lightMusic->clickStartButton();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

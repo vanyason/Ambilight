@@ -10,9 +10,8 @@
 #include <QAction>
 #include <QTextStream>
 
-#include "tabcontent.h"
-#include "rgbcontroller.h"
-#include "ambilight.h"
+#include "tabcontents.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -37,7 +36,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QSerialPort serialPort;
-
     QSystemTrayIcon *trayIcon;
 };
 

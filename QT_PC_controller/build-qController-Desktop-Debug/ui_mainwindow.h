@@ -23,9 +23,7 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
-#include <ambilight.h>
-#include <lightmusic.h>
-#include <rgbcontroller.h>
+#include <tabcontents.h>
 
 QT_BEGIN_NAMESPACE
 

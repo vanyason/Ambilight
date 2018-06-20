@@ -16,7 +16,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
-#include <screenregion.h>
+#include <mywidgets.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -25,7 +25,7 @@ class Ui_Ambilight
 public:
     QPushButton *pushButton;
     ScreenRegion *screenRegion;
-    QWidget *colorPallete;
+    ColorPallete *colorPallete;
 
     void setupUi(QWidget *Ambilight)
     {
@@ -41,7 +41,7 @@ public:
         screenRegion->setGeometry(QRect(100, 10, 421, 241));
         screenRegion->setCursor(QCursor(Qt::CrossCursor));
         screenRegion->setAutoFillBackground(false);
-        colorPallete = new QWidget(Ambilight);
+        colorPallete = new ColorPallete(Ambilight);
         colorPallete->setObjectName(QStringLiteral("colorPallete"));
         colorPallete->setGeometry(QRect(10, 60, 81, 191));
         colorPallete->setAutoFillBackground(true);
