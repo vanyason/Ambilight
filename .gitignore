@@ -1,2 +1,5 @@
 /QT_PC_controller/build*
+# previous property doesn`t take this one for unknow reason
+/QT_PC_controller/build-qController-Desktop-Debug
 /Java version/pc_controller_java/out
+
