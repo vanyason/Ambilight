@@ -20,7 +20,7 @@ alt="IMAGE ALT TEXT HERE" width="800" height="600" border="10" /></a>
 
 First, we have to assemble the circuit according to the schema.  Good explanation can be found [here](https://learn.adafruit.com/rgb-led-strips/usage)
 
-![Schema](https://github.com/vanyason/Ambilight/blob/master/resources/https://github.com/vanyason/Ambilight/blob/master/resources/led_strips_ledstripbjt.gif)
+![Schema](https://github.com/vanyason/Ambilight/blob/master/resources/led_strips_ledstripbjt.gif)
 ![Result](https://github.com/vanyason/Ambilight/blob/master/resources/NLWdnasIqUc.jpg)
 
 Then load [Arduino sketch](https://github.com/vanyason/Ambilight/tree/master/arduino_controller_2) to the Arduino
